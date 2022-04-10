@@ -1,10 +1,21 @@
 import React from 'react';
+import { Layout } from 'antd';
+
+const { Header, Content, Footer } = Layout
 
 function App() {
   return (
-    <div className="App">
-      APP
-    </div>
+    <Layout className="layout">
+      <Header>
+        HEAD
+      </Header>
+      <Content>
+        CONTENT
+      </Content>
+      <Footer>
+        FOOTER
+      </Footer>
+    </Layout>
   );
 }
 
