@@ -11,14 +11,14 @@ function App() {
   return (
     <Router>
       <Layout className="layout">
-        <Header className="header">
+        <Header>
           <Head/>
         </Header>
         <Content>
           <Body/>
         </Content>
-        <Footer>
-          FOOTER
+        <Footer className='footer'>
+          contact: functionalweasel@gmail.com
         </Footer>
       </Layout>
     </Router>
