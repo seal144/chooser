@@ -18,7 +18,7 @@ function App() {
           <Body/>
         </Content>
         <Footer className='footer'>
-          contact: functionalweasel@gmail.com
+          @: functionalweasel@gmail.com
         </Footer>
       </Layout>
     </Router>
@@ -26,3 +26,5 @@ function App() {
 }
 
 export default App;
+
+//find font
