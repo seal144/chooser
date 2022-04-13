@@ -22,7 +22,7 @@ const HeaderRoom = () => {
 
   return (
     <h2 className="header">
-      POKÓJ: {roomName}
+      {roomName}
     </h2>
   )
 }

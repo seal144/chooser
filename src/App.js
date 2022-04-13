@@ -18,7 +18,7 @@ function App() {
           <Body/>
         </Content>
         <Footer className='footer'>
-          @: functionalweasel@gmail.com
+          <p>@:functionalweasel@gmail.com</p>
         </Footer>
       </Layout>
     </Router>

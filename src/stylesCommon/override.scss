@@ -1,0 +1,11 @@
+@import "./variables.scss";
+
+.ant-layout-footer {
+    @media (max-width: $xs) {
+        padding: 24px 18px;
+    }
+
+    p {
+        margin: 0;
+    }
+}
