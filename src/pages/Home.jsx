@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button } from 'antd';
-import { Link } from 'react-router-dom';
 import MainMenuButton from '../components/MainMenuButton';
+
+import './Home.scss';
 
 import {CREATEROOM, JOINROOM, ABOUT} from '../helpers/paths'
 
