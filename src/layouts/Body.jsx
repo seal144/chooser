@@ -9,7 +9,8 @@ import About from '../pages/About';
 import { HOME, ABOUT, CREATEROOM, JOINROOM, ROOM } from '../helpers/paths';
 
 const Body = () => {
-    return ( 
+    return (
+      <div className='content-wrapper'>
         <Routes>
           <Route path={ HOME } element={<Home/>}/>
           <Route path={ ABOUT } element={<About/>}/>
@@ -17,6 +18,7 @@ const Body = () => {
           <Route path={ JOINROOM } element={<JoinRoom/>}/>
           <Route path={ ROOM } element={<Room/>}/>
         </Routes>
+      </div>
      );
 }
  

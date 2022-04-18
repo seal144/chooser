@@ -1,8 +1,6 @@
 import React from 'react';
 import MainMenuButton from '../components/MainMenuButton';
 
-import './Home.scss';
-
 import {CREATEROOM, JOINROOM, ABOUT} from '../helpers/paths'
 
 const Home = () => {
@@ -29,9 +27,9 @@ const Home = () => {
     ))
 
     return ( 
-        <div className = "home-menu">
+        <>
             {Menu}
-        </div>
+        </>
      );
 }
  
