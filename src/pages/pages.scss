@@ -10,14 +10,18 @@
     padding-bottom: calc(2 * $vertical-offset);
 
     @media (min-width: $xs) {
-        width: 70%
+        width: 90%
     }
 
     @media (min-width: $md) {
-        width: 60%
+        width: 80%
     }
 
     @media (min-width: $xl) {
-        width: 50%
+        width: 60%
     }
+}
+
+.main-menu {
+    padding: 0 5vw;
 }

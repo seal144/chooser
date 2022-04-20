@@ -17,12 +17,12 @@ const CreateRoom = () => {
     }
 
     const inputLayout = {
-        labelCol: { span: 5 },
-        wrapperCol: { span: 14 },
+        labelCol: { sm: { span: 7 }, md: { span:5 } },
+        wrapperCol: { sm: { span: 10 }, md: { span:14 } },
     }
 
     const buttonLayout = {
-        wrapperCol: {sm: { offset:5, span: 14}},
+        wrapperCol: { sm: { offset:7, span: 10 }, md: { offset:5, span: 14}},
     }
 
     return (

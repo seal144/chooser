@@ -27,9 +27,9 @@ const Home = () => {
     ))
 
     return ( 
-        <>
+        <div className='main-menu'>
             {Menu}
-        </>
+        </div>
      );
 }
  
