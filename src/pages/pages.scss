@@ -2,10 +2,12 @@
 
 .content-wrapper {
     width: 85%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: calc(2 * $vertical-offset);
+    padding-bottom: calc(2 * $vertical-offset);
 
     @media (min-width: $xs) {
         width: 70%

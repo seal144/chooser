@@ -1,5 +1,7 @@
+@import "../stylesCommon/variables.scss";
+
 .main-menu-button {
-    margin-bottom: 2vh;
+    margin-bottom: $vertical-offset;
 
     & h3 {
         color: white;
