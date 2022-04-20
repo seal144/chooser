@@ -32,6 +32,12 @@ const CreateRoom = () => {
             <Form.Item 
                 label="Twoje Imię"
                 name="hostName"
+                rules={[
+                    { required: true, message: 'Podaj imię' },
+                    { min: 2, message: 'Za krótkie imię'},
+                    { max: 15, message: 'za długie imię'},
+                    { whitespace: true, message: 'Niepoprawne imię'},
+                ]}
             >
                 <Input/>
             </Form.Item>
@@ -39,6 +45,12 @@ const CreateRoom = () => {
             <Form.Item 
                 label="Nazwa Pokoju"
                 name="roomName"
+                rules={[
+                    { required: true, message: 'Podaj nazwę pokoju' },
+                    { min: 2, message: 'Za krótka nazwa'},
+                    { max: 15, message: 'za długa nazwa'},
+                    { whitespace: true, message: 'Niepoprawne hasło'},
+                ]}
             >
                 <Input/>
             </Form.Item>
