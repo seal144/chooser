@@ -16,14 +16,18 @@ const CreateRoom = () => {
         console.log('finished', roomForm);
     }
 
-    const layout = {
-        labelCol: { span: 8 },
-        wrapperCol: { span: 16 },
+    const inputLayout = {
+        labelCol: { span: 5 },
+        wrapperCol: { span: 14 },
+    }
+
+    const buttonLayout = {
+        wrapperCol: {sm: { offset:5, span: 14}},
     }
 
     return (
         <Form
-            {...layout}
+            {...inputLayout}
             name = "newRoom"
             onFinish = {onFinish}
             onValuesChange = { updateFormState }
@@ -62,8 +66,8 @@ const CreateRoom = () => {
                 <Input.Password/>
             </Form.Item>
 
-            <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Form.Item {...buttonLayout}>
+            <Button type="primary" block htmlType="submit">
                 Stwórz Pokój
             </Button>
             </Form.Item>
