@@ -1,0 +1,19 @@
+{   
+    "id": 1,
+    "name": "niebo",
+    "admin": "Rafal",
+    "users": [
+        "Marta",
+        "Konrad",
+        "Magda"
+    ],
+    "options": [
+        "Small World",
+        "Eclipse",
+        "Osadnicy"
+    ],
+    "results": {
+        "Marta": [ "Osadnicy", "Eclipse", "SmallWorld"],
+        "Konrad": [ "Eclipse", "SmallWorld", "Osadnicy"]
+    }
+}
