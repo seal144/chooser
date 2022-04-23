@@ -1,0 +1,27 @@
+@import '../stylesCommon/variables.scss';
+
+.content-wrapper {
+    width: 85%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: calc(2 * $vertical-offset);
+    padding-bottom: calc(2 * $vertical-offset);
+
+    @media (min-width: $xs) {
+        width: 90%
+    }
+
+    @media (min-width: $md) {
+        width: 80%
+    }
+
+    @media (min-width: $xl) {
+        width: 60%
+    }
+}
+
+.main-menu {
+    padding: 0 5vw;
+}

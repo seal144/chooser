@@ -1,0 +1,26 @@
+{   
+    "id": 2,
+    "name": "pieklo",
+    "admin": "jacek",
+    "users": [
+        "placek",
+        "Siwy",
+        "Kędzior",
+        "gruba"
+    ],
+    "options": [
+        "Lords Of Waterdeep",
+        "Kamień gromu",
+        "Scythe",
+        "Twilight Imperium",
+        "Inis",
+        "Terraformacja Marsa",
+        "Tapestry",
+        "Concordia",
+        "Cywilizacja Poprzez Wieki",
+        "Dixit"
+    ],
+    "results": {
+        "Kędzior": ["Kamień gromu","Twilight Imperium", "Terraformacja Marsa", "Concordia", "Dixit", "Lords Of Waterdeep", "Scythe", "Inis", "Tapestry", "Cywilizacja Poprzez Wieki"]
+    }
+}
