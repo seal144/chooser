@@ -1,21 +1,57 @@
 import React, { useState } from 'react';
 import { Form, Input, Button } from 'antd';
 import { CloseSquareOutlined, PlusOutlined } from '@ant-design/icons'
+import { useNavigate } from "react-router-dom"
 
 const CreateRoom = () => {
+    const [form] = Form.useForm();
+
     const [ roomForm, setRoomForm ] = useState({
         hostName: '',
         roomName: '',
         roomPassword: '',
         options: []
     })
+    
+    const navigate = useNavigate();
 
     const updateFormState = (_, formValues) => {
         setRoomForm( formValues );
+        form.setFields([
+            {
+              name: 'submit',
+              errors: [''],
+            },
+        ]);
     }
 
-    const onFinish = () => {
+    //@todo replace after backend
+    const onFinish = async () => {
         console.log('finished', roomForm);
+        
+        const response = await sendForm(roomForm);
+
+        if (response.errorMessage) {
+            form.setFields([
+                {
+                  name: 'submit',
+                  errors: [response.errorMessage],
+                },
+            ]);
+        } else {
+            navigate("/room/admin/niebo")
+        }
+    }
+
+    //@todo replace after backend
+    const sendForm = async (formValues) => {
+        if (formValues.roomName === 'pieklo') {
+            return {
+                errorMessage: 'Nazwa pokoju niedostępna'
+            }
+        } else {
+            return('200');
+        }
     }
 
     const inputLayout = {
@@ -29,8 +65,9 @@ const CreateRoom = () => {
 
     return (
         <Form
+            form = { form }
             {...inputLayout}
-            name = "newRoom"
+            name = "newRoomForm"
             onFinish = {onFinish}
             onValuesChange = { updateFormState }
             autoComplete = "off"
@@ -125,10 +162,10 @@ const CreateRoom = () => {
                 )}
             </Form.List>
 
-            <Form.Item {...buttonLayout}>
-            <Button type="primary" block htmlType="submit">
-                Stwórz Pokój
-            </Button>
+            <Form.Item name="submit" {...buttonLayout}>
+                <Button type="primary" block htmlType="submit">
+                    Stwórz Pokój
+                </Button>
             </Form.Item>
         </Form>
      );
