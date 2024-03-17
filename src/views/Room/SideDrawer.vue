@@ -6,7 +6,7 @@
     :width="drawerWidth"
   >
     <div class="drawer-content">
-      <div class="drawer-info">
+      <div v-if="room" class="drawer-info">
         <div className="drawer-header">
           <HeaderCard class="drawer-header-text">{{ room.name }}</HeaderCard>
           <ButtonIcon icon="mdi-menu-open" @click="emit('close')" />
@@ -86,11 +86,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, PropType, ref } from "vue";
+import { computed, ref, toRef } from "vue";
 import { useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
 import { format } from "date-fns";
 
+import { useRoomStore } from "@/store/roomStore";
 import { useDialogsStore } from "@/store/dialogs";
 import {
   Button,
@@ -104,16 +105,11 @@ import useDeleteRoom from "@/composables/useDeleteRoom";
 import useAbandonRoom from "@/composables/useAbandonRoom";
 import getUser from "@/composables/getUser";
 import { RoutesNames } from "@/router";
-import { Dialogs, RoomDetailsData, User } from "@/types";
+import { Dialogs, User } from "@/types";
 
-const props = defineProps({
-  room: {
-    type: Object as PropType<RoomDetailsData>,
-    required: true,
-  },
-});
 const emit = defineEmits(["close"]);
 
+const room = toRef(useRoomStore(), "room");
 const { user } = getUser();
 const router = useRouter();
 const { xs, xxl } = useDisplay();
@@ -139,16 +135,15 @@ const drawerWidth = computed(() => {
 });
 
 const isOwner = computed(() => {
-  if (props.room.owner.id === user.value?.uid) {
+  if (room.value && room.value.owner.id === user.value?.uid) {
     return true;
   }
   return false;
 });
 
-const formattedTime = format(
-  props.room.createTime.toDate(),
-  "dd.MM.yyy | HH:mm"
-);
+const formattedTime = room.value
+  ? format(room.value.createTime.toDate(), "dd.MM.yyy | HH:mm")
+  : "";
 
 const openKickUserDialog = (guest: User) => {
   selectedUserForAction.value = guest;
@@ -168,8 +163,8 @@ const openConfirmAbandonDialog = () => {
 };
 
 const handleKickUser = async () => {
-  if (selectedUserForAction.value) {
-    await abandonRoom(props.room.id, selectedUserForAction.value.id);
+  if (selectedUserForAction.value && room.value) {
+    await abandonRoom(room.value.id, selectedUserForAction.value.id);
     if (errorAbandonRoom.value) {
       snackbarAbandonError.value = true;
     } else {
@@ -178,7 +173,9 @@ const handleKickUser = async () => {
   }
 };
 const handleDeleteRoom = async () => {
-  await deleteRoom(props.room.id);
+  if (room.value) {
+    await deleteRoom(room.value.id);
+  }
   if (errorDeleteRoom.value) {
     snackbarDeleteError.value = true;
   } else {
@@ -187,7 +184,9 @@ const handleDeleteRoom = async () => {
   }
 };
 const handleAbandonRoom = async () => {
-  await abandonRoom(props.room.id);
+  if (room.value) {
+    await abandonRoom(room.value.id);
+  }
   if (errorAbandonRoom.value) {
     snackbarAbandonError.value = true;
   } else {

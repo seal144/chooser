@@ -1,21 +1,28 @@
 import { ref, watchEffect } from "vue";
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { Unsubscribe, doc, getDoc, onSnapshot } from "firebase/firestore";
 
 import { auth, db } from "@/firebase/config";
+import { useRoomStore } from "@/store/roomStore";
 import { maxGuestsInRoom } from "@/utils/validation";
 import {
   Collection,
   CommonErrors,
   RoomDataDB,
-  RoomDetailsData,
   RoomField,
   User,
   UserField,
 } from "@/types";
 
+const roomStore = useRoomStore();
+
 const useSubscribeRoom = (roomId: string) => {
-  const room = ref<RoomDetailsData | null>(null);
   const error = ref<string | null>(null);
+  let unsubscribe: Unsubscribe = () => {};
+
+  const unsubscribeRoom = () => {
+    unsubscribe();
+    roomStore.room = null;
+  };
 
   const subscribeRoom = async () => {
     try {
@@ -46,21 +53,22 @@ const useSubscribeRoom = (roomId: string) => {
         throw new Error(CommonErrors.TheRoomIsFull);
       }
 
-      const unsubscribe = onSnapshot(docRef, async (snapshot) => {
-        room.value = {
-          id: snapshot.id,
-          createTime: snapshot.get(RoomField.CreateTime),
-          parsedGroupId: snapshot.get(RoomField.GroupId) ? 1 : 0,
-          name: snapshot.get(RoomField.Name),
-          owner: snapshot.get(RoomField.Owner),
-          guestsIds: snapshot.get(RoomField.GuestsIds),
-          guests: snapshot.get(RoomField.Guests),
-          pastGuests: snapshot.get(RoomField.PastGuests),
+      unsubscribe = onSnapshot(docRef, async (snapshot) => {
+        roomStore.room = {
+          [RoomField.Id]: snapshot.id,
+          [RoomField.CreateTime]: snapshot.get(RoomField.CreateTime),
+          [RoomField.ParsedGroupId]: snapshot.get(RoomField.GroupId) ? 1 : 0,
+          [RoomField.Name]: snapshot.get(RoomField.Name),
+          [RoomField.Owner]: snapshot.get(RoomField.Owner),
+          [RoomField.GuestsIds]: snapshot.get(RoomField.GuestsIds),
+          [RoomField.Guests]: snapshot.get(RoomField.Guests),
+          [RoomField.PastGuests]: snapshot.get(RoomField.PastGuests),
+          [RoomField.Phase]: snapshot.get(RoomField.Phase),
         };
       });
 
       watchEffect((onInvalidate) => {
-        onInvalidate(() => unsubscribe());
+        onInvalidate(() => unsubscribeRoom());
       });
     } catch (err) {
       const { message } = err as Error;
@@ -68,7 +76,8 @@ const useSubscribeRoom = (roomId: string) => {
       error.value = message;
     }
   };
-  return { room, subscribeRoom, error };
+
+  return { subscribeRoom, unsubscribeRoom, error };
 };
 
 export default useSubscribeRoom;

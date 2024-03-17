@@ -10,6 +10,7 @@ import { auth } from "../firebase/config";
 export enum RoutesNames {
   Home = "Home",
   Room = "Room",
+  RoomChat = "Chat",
   Login = "Login",
   Signup = "Signup",
 }
@@ -62,6 +63,17 @@ const routes = [
       {
         path: "",
         name: RoutesNames.Room,
+        component: () => import("@/views/Room/index.vue"),
+      },
+    ],
+  },
+  {
+    path: "/room/:id/chat",
+    component: () => import("@/layouts/default/Layout.vue"),
+    children: [
+      {
+        path: "",
+        name: RoutesNames.RoomChat,
         component: () => import("@/views/Room/index.vue"),
       },
     ],

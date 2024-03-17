@@ -3,7 +3,13 @@ import { Timestamp, addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/firebase/config";
 import { getDocs } from "@/firebase/docs";
 import CryptoJS from "crypto-js";
-import { CommonErrors, RoomDataDB, RoomField, Collection } from "@/types";
+import {
+  CommonErrors,
+  Phase,
+  RoomDataDB,
+  RoomField,
+  Collection,
+} from "@/types";
 
 type RoomFormData = {
   name: string;
@@ -40,18 +46,21 @@ const createRoom = async (roomFormData: RoomFormData) => {
       : "";
 
     const room: RoomDataDB = {
-      createTime: Timestamp.now(),
-      groupId: groupId,
-      name: roomFormData.name,
-      guestsIds: [],
-      owner: {
+      [RoomField.CreateTime]: Timestamp.now(),
+      [RoomField.GroupId]: groupId,
+      [RoomField.Name]: roomFormData.name,
+      [RoomField.GuestsIds]: [],
+      [RoomField.Owner]: {
         id: auth.currentUser.uid,
         displayName: auth.currentUser.displayName
           ? auth.currentUser.displayName
           : "",
       },
-      guests: [],
-      pastGuests: [],
+      [RoomField.Guests]: [],
+      [RoomField.PastGuests]: [],
+      [RoomField.Phase]: Phase.SettingOptions,
+      [RoomField.Options]: [],
+      [RoomField.Choices]: [],
     };
 
     const response = await addDoc(collection(db, Collection.Rooms), room);

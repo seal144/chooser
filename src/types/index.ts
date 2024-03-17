@@ -61,6 +61,32 @@ export type ChatDataDB = Omit<Chat, ChatField.Id>;
 
 export type ChatDataDBPartial = Partial<ChatDataDB>;
 
+export enum Phase {
+  SettingOptions,
+  Choosing,
+  Results,
+}
+
+enum OptionField {
+  Id = "id",
+  Name = "name",
+}
+
+interface Option {
+  [OptionField.Id]: string;
+  [OptionField.Name]: string;
+}
+
+enum ResultField {
+  UserId = "userId",
+  Ranking = "ranking",
+}
+
+interface Choice {
+  [ResultField.UserId]: string;
+  [ResultField.Ranking]: string[];
+}
+
 export enum RoomField {
   Id = "id",
   CreateTime = "createTime",
@@ -71,7 +97,11 @@ export enum RoomField {
   Owner = "owner",
   Guests = "guests",
   PastGuests = "pastGuests",
+  Phase = "phase",
+  Options = "options",
+  Choices = "choices",
 }
+
 export interface Room {
   [RoomField.Id]: string;
   [RoomField.CreateTime]: Timestamp;
@@ -82,6 +112,9 @@ export interface Room {
   [RoomField.Owner]: User;
   [RoomField.Guests]: User[];
   [RoomField.PastGuests]: User[];
+  [RoomField.Phase]: Phase;
+  [RoomField.Options]: Option[];
+  [RoomField.Choices]: Choice[];
 }
 
 export type RoomDataDB = Omit<Room, RoomField.Id | RoomField.ParsedGroupId>;
@@ -100,6 +133,7 @@ export type RoomDetailsData = Pick<
   | RoomField.GuestsIds
   | RoomField.Guests
   | RoomField.PastGuests
+  | RoomField.Phase
 >;
 
 export enum RoomRole {

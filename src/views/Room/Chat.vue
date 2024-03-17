@@ -78,18 +78,22 @@ import LazyMessagesChunk from "./LazyMessagesChunk.vue";
 import useSendMessage from "@/composables/useSendMessage";
 import subscribeChat from "@/composables/subscribeChat";
 import { messageValidation } from "@/utils/validation";
-import { RoomDetailsData } from "@/types";
+import { User } from "@/types";
 
 const props = defineProps({
-  room: {
-    type: Object as PropType<RoomDetailsData>,
+  roomId: {
+    type: String,
+    required: true,
+  },
+  participantsList: {
+    type: Object as PropType<User[]>,
     required: true,
   },
 });
 
 const { smAndDown } = useDisplay();
 const { sendMessage, error: errorSendMessage } = useSendMessage();
-const { chat: wholeChat, error: errorChat } = subscribeChat(props.room.id);
+const { chat: wholeChat, error: errorChat } = subscribeChat(props.roomId);
 
 const form = ref(false);
 const message = ref("");
@@ -147,10 +151,6 @@ const nearBottomValue = computed(() => {
   return isFirefox.value ? 850 : 600;
 });
 
-const participantsList = computed(() => {
-  return [...props.room.guests, ...props.room.pastGuests, props.room.owner];
-});
-
 const handleChatScroll = () => {
   if (
     chatWindow.value &&
@@ -205,7 +205,7 @@ const scrollToBottom = () => {
 
 const submitMessage = () => {
   if (!form.value || !message.value.trim()) return;
-  sendMessage(props.room.id, message.value);
+  sendMessage(props.roomId, message.value);
   message.value = "";
 };
 </script>
